@@ -1,32 +1,35 @@
-import {Controller, Delete, Get, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {UserService} from "./user.service";
+import {CreateModel, UpdateModel} from "./user.dto";
 
 @Controller('/users')
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService) {
+    }
 
     @Post()
-    async create() {
-        return this.userService.create()
+    async create(@Body() data: CreateModel) {
+        return await this.userService.create(data)
     }
 
     @Get()
     async getAll() {
-        return this.userService.getAll()
+        return await this.userService.getAll()
     }
 
     @Get("/:id")
-    async getById(){
-        return this.userService.getById()
+    async getById(@Param('id') id: number) {
+        return await this.userService.getById(id)
     }
 
     @Put("/:id")
-    async update() {
-        return this.userService.update()
+    async update(@Param("id") id: number, @Body() data: UpdateModel) {
+        return await this.userService.update(id, data)
     }
+
     @Delete("/:id")
-    async delete() {
-        return this.userService.delete()
+    async delete(@Param("id") id: number) {
+        return await this.userService.delete(id)
     }
 
 }
