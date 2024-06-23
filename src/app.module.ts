@@ -8,6 +8,7 @@ import {BlockModule} from './services/block/block.module';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {Block, Project, Task, User} from "./core/schema";
 import {DataSource} from "typeorm";
+import {AuthModule} from "./services/auth/auth.module";
 
 @Module({
     imports: [
@@ -28,7 +29,9 @@ import {DataSource} from "typeorm";
         UserModule,
         TaskModule,
         ProjectModule,
-        BlockModule],
+        BlockModule,
+        AuthModule
+    ],
     controllers: [AppController],
     providers: [AppService],
 })

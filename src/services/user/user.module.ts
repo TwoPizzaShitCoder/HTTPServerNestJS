@@ -8,6 +8,6 @@ import {User} from "../../core/schema";
   controllers: [UserController],
   providers: [UserService],
   imports : [TypeOrmModule.forFeature([User])],
-  exports: [TypeOrmModule]
+  exports: [TypeOrmModule, UserService]
 })
 export class UserModule {}

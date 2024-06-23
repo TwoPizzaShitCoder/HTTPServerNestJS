@@ -9,7 +9,8 @@ export class UserService {
     constructor(
         @InjectRepository(User)
         private repository: Repository<User>
-    ) {}
+    ) {
+    }
 
     async create(data: CreateModel) {
         try {
@@ -37,7 +38,20 @@ export class UserService {
             if (e instanceof EntityNotFoundError)
                 throw new HttpException("пользователь не найден", 404)
         }
+    }
 
+    async getAuthDataByLogin(login: string) {
+        try {
+            return await this.repository.findOneOrFail(
+                {
+                    select: ["id", "login", "password"],
+                    where: {login: login}
+                }
+            )
+        } catch (e) {
+            if (e instanceof EntityNotFoundError)
+                throw new HttpException("неверное имя пользователя или пароль", 404)
+        }
     }
 
     async update(id: number, data: UpdateModel) {
